@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Solution</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>Solution for N = {{ n }}</h1>
+
+        {% if solution %}
+        <table>
+            {% for row in solution %}
+            <tr>
+                {% for cell in row %}
+                <td class="{{ 'queen' if cell == 1 else '' }}">
+                    {{ '♛' if cell == 1 else '' }}
+                </td>
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </table>
+        {% else %}
+        <p>No Solution Found.</p>
+        {% endif %}
+
+        <a href="/">Try Another</a>
+    </div>
+
+</body>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>N-Queens Solver</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="container">
+        <h1>N-Queens Solver</h1>
+
+        <form action="/solve" method="POST">
+            <input type="number" name="n" min="1" required placeholder="Enter N">
+            <button type="submit">Solve</button>
+        </form>
+    </div>
+
+</body>
+</html>
