@@ -59,7 +59,6 @@ N-QUEEN/
 └── README.md
 ```
 
-
 ---
 
 ## ⚙️ Installation & Setup
@@ -71,13 +70,11 @@ git clone https://github.com/your-username/N-QUEEN.git
 cd N-QUEEN
 ```
 
-
 ### 2️⃣ Create a virtual environment (recommended)
 
 ```bash
 python -m venv venv
 ```
-
 
 Activate it:
 
@@ -87,20 +84,17 @@ Activate it:
 venv\Scripts\activate
 ```
 
-
 #### Mac/Linux
 
 ```bash
 source venv/bin/activate
 ```
 
-
 ### 3️⃣ Install dependencies
 
 ```bash
 pip install -r requirements.txt
 ```
-
 
 ### 4️⃣ Run the application
 
