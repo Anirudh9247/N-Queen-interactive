@@ -133,6 +133,7 @@ http://127.0.0.1:5000/
 A closer look at the code and assets that power the visualizer:
 
 ### 🧩 `solver.py`
+
 Contains the core algorithm. Key components:
 
 - `is_safe(board, row, col, n)` – verifies that a queen can be placed at the given coordinates.
@@ -142,6 +143,7 @@ Contains the core algorithm. Key components:
 This module returns a single solution as a list of row positions or `None` if no solution exists.
 
 ### 🚀 `app.py`
+
 The Flask app that handles HTTP requests:
 
 - `@app.route('/', methods=['GET', 'POST'])` – renders the input form and, upon submission, calls the solver.
@@ -151,10 +153,12 @@ The Flask app that handles HTTP requests:
 The server runs on port 5000 by default and reloads automatically in debug mode.
 
 ### 🖼️ Templates
+
 `templates/index.html` – contains the form where users enter the board size.
 `templates/result.html` – uses a loop to render an `N × N` table, placing a queen icon (`♛`) in the appropriate cells.
 
 ### 🎨 Static Assets
+
 `static/style.css` – styles the chessboard, buttons, and layout.
 `static/script.js` – optionally handles client-side enhancements such as validating the input value.
 
