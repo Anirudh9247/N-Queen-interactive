@@ -131,18 +131,21 @@ A closer look at the code and assets that power the visualizer:
 Contains the core algorithm. Key components:
 
 - `is_safe(board, row, col, n)` – verifies that a queen can be placed at the given coordinates.
-- `solve_n_queens(n)` – initializes the board and starts recursive backtracking.
-- `backtrack(board, col, n)` – attempts to place queens in each column, undoing moves when a conflict arises.
+- `solve_n_queens(n)` – initializes the board and calls the recursive backtracking function.
+- `solve(board, row, n, solutions)` – recursive function that attempts to place queens row by row.
 
-This module returns a single solution as a list of row positions or `None` if no solution exists.
+This module fundamentally calculates and returns a list of *all* possible solutions.
 
 ### 🚀 `app.py`
 
-The Flask app that handles HTTP requests:
+The primary Flask app that handles HTTP routing:
 
-- `@app.route('/', methods=['GET', 'POST'])` – renders the input form and, upon submission, calls the solver.
-- Parses the integer `N` from the form and invokes `solver.solve_n_queens(n)`.
-- Passes the resulting board configuration to `result.html` for rendering.
+- `@app.route('/', methods=['GET'])` – renders the input form `index.html`.
+- `@app.route('/solve', methods=['POST'])` – parsing algorithm:
+  - Validates `N` and checks bounds (n must be between 1 and 12 for performance limits).
+  - Invokes `solver.solve_n_queens(n)`.
+  - Extracts the first valid solution and maps the `'Q'` cells into a 2D numerical array (0s and 1s).
+  - Passes the formatted solution matrix to `result.html` for display.
 
 The server runs on port 5000 by default and reloads automatically in debug mode.
 
