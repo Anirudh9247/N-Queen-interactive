@@ -112,12 +112,12 @@ http://127.0.0.1:5000/
 
 ## 🧠 How It Works
 
-- Uses the **Backtracking Algorithm**
-- Recursively places queens column by column
-- Checks for:
-  - Row safety
-  - Upper diagonal safety
-  - Lower diagonal safety
+- Uses an **Optimized Backtracking Algorithm**
+- Recursively places queens row by row
+- Uses boolean arrays for **O(1) safety checks** across:
+  - Columns
+  - Positive diagonals
+  - Negative diagonals
 - Displays the solution on a visual chessboard
 
 ---
@@ -128,13 +128,12 @@ A closer look at the code and assets that power the visualizer:
 
 ### 🧩 `solver.py`
 
-Contains the core algorithm. Key components:
+Contains the core optimized algorithm. Key components:
 
-- `is_safe(board, row, col, n)` – verifies that a queen can be placed at the given coordinates.
-- `solve_n_queens(n)` – initializes the board and calls the recursive backtracking function.
-- `solve(board, row, n, solutions)` – recursive function that attempts to place queens row by row.
+- `solve_n_queens(n)` – initializes the board, sets up boolean lookup arrays for columns and diagonals, and returns the result.
+- `backtrack(row)` – an internal recursive function that attempts to place queens row by row, performing constraint checks in O(1) time.
 
-This module fundamentally calculates and returns a list of *all* possible solutions.
+This module calculates and returns a list of *all* possible valid configurations.
 
 ### 🚀 `app.py`
 
