@@ -1,19 +1,98 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>N-Queens Solver</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <title>N Queen Solver</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+
+    <style>
+        .board {
+            display: grid;
+            margin: 20px 0;
+            gap: 0;
+        }
+
+        .cell {
+            width: 50px;
+            height: 50px;
+            font-size: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .white {
+            background: #f0d9b5;
+        }
+
+        .black {
+            background: #b58863;
+        }
+
+        #spinner {
+            display: none;
+        }
+    </style>
 </head>
-<body>
 
-    <div class="container">
-        <h1>N-Queens Solver</h1>
+<body class="container mt-5">
 
-        <form action="/solve" method="POST">
-            <input type="number" name="n" min="1" required placeholder="Enter N">
-            <button type="submit">Solve</button>
-        </form>
+<h1 class="text-center mb-4">N Queen Solver</h1>
+
+<form method="POST" onsubmit="return validateForm()">
+    <div class="mb-3">
+        <input type="number" name="size" id="size" class="form-control" placeholder="Enter N">
     </div>
+
+    <button class="btn btn-primary w-100">Solve</button>
+</form>
+
+<div id="spinner" class="text-center mt-3">
+    <div class="spinner-border text-primary"></div>
+    <p>Solving...</p>
+</div>
+
+{% if solutions %}
+<h3 class="mt-5">Total Solutions: {{ solutions|length }}</h3>
+
+{% for solution in solutions %}
+<div class="board" style="grid-template-columns: repeat({{n}}, 50px);">
+
+{% for row in solution %}
+    {% for cell in row %}
+        {% set r = loop.parent.loop.index0 %}
+        {% set c = loop.index0 %}
+        
+        <div class="cell {% if (r+c)%2==0 %}white{% else %}black{% endif %}">
+            {% if cell == 'Q' %}
+                👑
+            {% endif %}
+        </div>
+    {% endfor %}
+{% endfor %}
+
+</div>
+<hr>
+{% endfor %}
+{% endif %}
+
+<script>
+function validateForm() {
+    let n = document.getElementById("size").value;
+
+    if (n < 4) {
+        alert("N must be at least 4");
+        return false;
+    }
+
+    if (n > 12) {
+        alert("Maximum allowed is 12");
+        return false;
+    }
+
+    document.getElementById("spinner").style.display = "block";
+    return true;
+}
+</script>
 
 </body>
 </html>
