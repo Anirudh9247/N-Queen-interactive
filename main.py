@@ -38,6 +38,8 @@ def start_solver():
 
     if solutions:
 
+        canvas.delete("all")
+
         draw_board(
             canvas,
             solutions[0],
@@ -47,6 +49,12 @@ def start_solver():
         result_label.config(
             text=f"Total Solutions: {len(solutions)}"
         )
+
+    else:
+
+        canvas.delete("all")
+
+        result_label.config(text=f"No solutions found for n={n}")
 
 
 # ---------------- WINDOW ---------------- #
@@ -98,3 +106,4 @@ canvas = tk.Canvas(
 canvas.pack()
 
 root.mainloop()
+
