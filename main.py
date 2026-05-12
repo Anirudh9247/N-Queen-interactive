@@ -5,7 +5,20 @@ from solver import solve_n_queens
 from board import draw_board
 
 
+# ---------------- GLOBAL VARIABLES ---------------- #
+
+solutions = []
+current_index = 0
+current_n = 0
+
+
+# ---------------- SOLVER FUNCTION ---------------- #
+
 def start_solver():
+
+    global solutions
+    global current_index
+    global current_n
 
     try:
 
@@ -34,44 +47,86 @@ def start_solver():
 
         return
 
+    current_n = n
+
     solutions = solve_n_queens(n)
 
-    if solutions:
+    current_index = 0
 
-        canvas.delete("all")
-
-        draw_board(
-            canvas,
-            solutions[0],
-            n
-        )
-
-        result_label.config(
-            text=f"Total Solutions: {len(solutions)}"
-        )
-
-    else:
-
-        canvas.delete("all")
-
-        result_label.config(text=f"No solutions found for n={n}")
+    show_solution()
 
 
-# ---------------- WINDOW ---------------- #
+# ---------------- DISPLAY SOLUTION ---------------- #
+
+def show_solution():
+
+    if not solutions:
+        return
+
+    draw_board(
+        canvas,
+        solutions[current_index],
+        current_n
+    )
+
+    result_label.config(
+        text=f"Solution {current_index + 1} of {len(solutions)}"
+    )
+
+
+# ---------------- NEXT BUTTON ---------------- #
+
+def next_solution():
+
+    global current_index
+
+    if not solutions:
+        return
+
+    if current_index < len(solutions) - 1:
+
+        current_index += 1
+
+        show_solution()
+
+
+# ---------------- PREVIOUS BUTTON ---------------- #
+
+def previous_solution():
+
+    global current_index
+
+    if not solutions:
+        return
+
+    if current_index > 0:
+
+        current_index -= 1
+
+        show_solution()
+
+
+# ---------------- GUI WINDOW ---------------- #
 
 root = tk.Tk()
 
 root.title("N Queen Solver")
 
-root.geometry("800x800")
+root.geometry("800x850")
+
+
+# ---------------- TITLE ---------------- #
 
 title = tk.Label(
     root,
     text="N Queen Solver",
-    font=("Arial", 22)
+    font=("Arial", 24)
 )
 
 title.pack(pady=10)
+
+
+# ---------------- ENTRY ---------------- #
 
 entry = tk.Entry(
     root,
@@ -79,6 +134,9 @@ entry = tk.Entry(
 )
 
 entry.pack(pady=5)
+
+
+# ---------------- SOLVE BUTTON ---------------- #
 
 solve_button = tk.Button(
     root,
@@ -89,13 +147,44 @@ solve_button = tk.Button(
 
 solve_button.pack(pady=10)
 
+
+# ---------------- RESULT LABEL ---------------- #
+
 result_label = tk.Label(
     root,
     text="",
     font=("Arial", 14)
 )
 
-result_label.pack()
+result_label.pack(pady=5)
+
+
+# ---------------- CONTROL BUTTONS ---------------- #
+
+button_frame = tk.Frame(root)
+
+button_frame.pack(pady=10)
+
+prev_button = tk.Button(
+    button_frame,
+    text="Previous",
+    width=12,
+    command=previous_solution
+)
+
+prev_button.grid(row=0, column=0, padx=10)
+
+next_button = tk.Button(
+    button_frame,
+    text="Next",
+    width=12,
+    command=next_solution
+)
+
+next_button.grid(row=0, column=1, padx=10)
+
+
+# ---------------- CANVAS ---------------- #
 
 canvas = tk.Canvas(
     root,
@@ -105,5 +194,7 @@ canvas = tk.Canvas(
 
 canvas.pack()
 
-root.mainloop()
 
+# ---------------- RUN ---------------- #
+
+root.mainloop()
